@@ -1,0 +1,26 @@
+<div class="row container mt-3 justify-content-center">
+    <div class="mb-3">
+      <label for="description" class="form-label">Lista:</label>
+      <input type="text" id="description" class="form-control" [(ngModel)]="marketList.description">
+    </div>
+  
+    <div class="mb-3">
+      <label for="newItem" class="form-label">Novo Item:</label>
+      <div class="input-group">
+        <input type="text" id="newItem" class="form-control" [(ngModel)]="newItemName">
+        <button class="btn btn-primary" (click)="addItem()">Adicionar</button>
+      </div>
+    </div>
+  
+    <div id="includes">
+      <ul class="list-group mb-3 mx-auto">
+        <li *ngFor="let item of marketList.items; let i = index" class="list-group-item d-flex justify-content-between mb-1">
+          {{ item.name }}
+          <button class="btn btn-danger btn-sm" (click)="removeItem(i)">X</button>
+        </li>
+      </ul>
+    </div>
+  
+    <button class="btn btn-success" (click)="saveMarketList()">Salvar Lista</button>
+  </div>
+  
