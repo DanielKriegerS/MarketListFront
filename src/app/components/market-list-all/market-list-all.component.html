@@ -1,0 +1,37 @@
+<div class="text-center">
+  <h2>{{ isFinishedList ? 'Listas Finalizadas' : 'Listas Abertas' }}</h2>
+</div>
+
+<div class="row">
+  <ul>
+    <ng-container *ngIf="!isFinishedList">
+      <li *ngFor="let list of marketLists" class="row mb-3">
+        <div id="item" class="col-8">
+          <p class="mx-2 my-auto">
+            {{ list.description }} - {{ list.items.length }} itens --
+            {{ list.createDate | date: 'dd/MM/yy' }}
+          </p>
+        </div>
+
+        <div class="btn-div col-4">
+          <button class="btn btn-success col-10" [routerLink]="['/market-list', list.id]"> > </button>
+        </div>
+      </li>
+    </ng-container>
+
+    <ng-container *ngIf="isFinishedList">
+      <li *ngFor="let list of finishedMarketLists" class="row mb-3">
+        <div id="item" class="col-8">
+          <p class="mx-2 my-auto">
+            {{ list.description }} - {{ list.items.length }} itens --
+            {{ list.finishDate| date: 'dd/MM/yy' }}
+          </p>
+        </div>
+
+        <div class="btn-div col-4">
+          <button class="btn btn-success col-10" [routerLink]="['/finished-market-list', list.id]"> > </button>
+        </div>
+              </li>
+    </ng-container>
+  </ul>
+</div>
