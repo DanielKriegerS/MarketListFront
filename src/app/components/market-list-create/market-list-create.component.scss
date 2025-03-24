@@ -14,3 +14,9 @@ li {
     background-color: rgba(200, 200, 230, .8);
     border: .2em solid rgba(240, 230, 235, .5);
 }
+
+@media screen and (min-width:768px) {
+    .container {
+        margin: auto;
+    }
+}
