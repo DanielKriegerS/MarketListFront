@@ -16,13 +16,13 @@ import { FinishedMarketListService } from '../../services/finished-market-list.s
 export class MarketListComponent implements OnInit {
   lista?: MarketList;
   itemId?: string;
-  editState: { [key: string]: boolean } = {};
-  rawPriceInput: { [key: string]: number } = {};
-  rawQuantityInput: { [key: string]: string } = {};
-  rawNameInput: { [key: string]: string } = {};
-  selectedItems: { [key: string]: boolean } = {}; 
-  totalPrice: { [key: string]: number} = {}; 
-  priceInputs: { [key: string]: string } = {};
+  editState: { [key: number]: boolean } = {};
+  rawPriceInput: { [key: number]: number } = {};
+  rawQuantityInput: { [key: number]: string } = {};
+  rawNameInput: { [key: number]: string } = {};
+  selectedItems: { [key: number]: boolean } = {}; 
+  totalPrice: { [key: number]: number} = {}; 
+  priceInputs: { [key: number]: string } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -40,87 +40,88 @@ export class MarketListComponent implements OnInit {
       this.marketListService.getMarketListById(id).subscribe((data) => {
         this.lista = data;
   
-        this.lista?.items.forEach(item => {
+        this.lista?.items.forEach((item, index) => {
           item.price = item.price ?? 0;
           item.quantity = item.quantity ?? 0;
-          this.rawPriceInput[item.name] = item.price;
-          this.rawQuantityInput[item.name] = item.quantity.toString();
-          this.rawNameInput[item.name] = item.name; 
-          this.priceInputs[item.name] = this.getFormattedPrice(item.name);
+  
+          this.rawPriceInput[index] = item.price;
+          this.rawQuantityInput[index] = item.quantity.toString();
+          this.rawNameInput[index] = item.name; 
+          this.priceInputs[index] = this.getFormattedPrice(index);  
         });
       });
     }
   }
-    
-  toggleEdit(itemName: string) {
-    this.editState[itemName] = !this.editState[itemName];
   
-    if (!this.editState[itemName]) {
-      const item = this.lista?.items.find(item => item.name === itemName);
-      if (item) {
-        if (!this.rawNameInput[itemName]) {
-          this.rawNameInput[itemName] = item.name;
-          alert("O nome deve ser preenchido");
-          return;
-        }
-
-        item.price = this.rawPriceInput[itemName] ?? 0;
-        item.quantity = parseInt(this.rawQuantityInput[itemName]) || 0;
-        item.name = this.rawNameInput[itemName] ?? item.name; 
+  toggleEdit(index: number) {
+    this.editState[index] = !this.editState[index];
+    if (this.editState[index]) return;
   
-        this.rawPriceInput[itemName] = item.price;
-        this.rawQuantityInput[itemName] = item.quantity.toString();
-        this.updateTotal();
-      }
+    const item = this.lista?.items[index];
+    if (!item) return;
+  
+    if (!this.rawNameInput[index]) {
+      this.rawNameInput[index] = item.name;
+      alert("O nome deve ser preenchido");
+      return;
     }
-  }
-     
-  confirmEdit(itemName: string) {
-    this.toggleEdit(itemName);
-    this.updateTotal(); 
-  }
   
-  updatePriceInput(itemName: string, event: any) {
-    let value = event.target.value.replace(/[^0-9,]/g, "").replace(',', '.'); 
-    this.rawPriceInput[itemName] = parseFloat(value) || 0;
-    this.updateTotal(); 
-  }
+    item.price = this.rawPriceInput[index] ?? 0;
+    item.quantity = parseInt(this.rawQuantityInput[index]) || 0;
+    item.name = this.rawNameInput[index] ?? item.name;
   
-  updateQuantityInput(itemName: string, event: any) {
-    let value = event.target.value.replace(/[^0-9]/g, "");
-    this.rawQuantityInput[itemName] = value;
+    this.rawPriceInput[index] = item.price;
+    this.rawQuantityInput[index] = item.quantity.toString();
+  
     this.updateTotal();
   }
   
-  handlePriceFocus(itemName: string) {
-    this.priceInputs[itemName] = this.rawPriceInput[itemName].toString().replace('.', ',');
+  confirmEdit(index: number) {
+    this.toggleEdit(index);
+    this.updateTotal();
+  }  
+  
+  updatePriceInput(index: number, event: any) {
+    let value = event.target.value.replace(/[^0-9,]/g, "").replace(',', '.'); 
+    this.rawPriceInput[index] = parseFloat(value) || 0;
+    this.updateTotal(); 
+  }
+  
+  updateQuantityInput(index: number, event: any) {
+    let value = event.target.value.replace(/[^0-9]/g, "");
+    this.rawQuantityInput[index] = value;
+    this.updateTotal();
+  }
+  
+  handlePriceFocus(index: number) {
+    this.priceInputs[index] = this.rawPriceInput[index].toString().replace('.', ',');
   }
 
-  handlePriceBlur(itemName: string) {
-    let rawValue = this.priceInputs[itemName].replace(',', '.'); 
-    this.rawPriceInput[itemName] = parseFloat(rawValue) || 0; 
-    this.priceInputs[itemName] = this.getFormattedPrice(itemName);
+  handlePriceBlur(index: number) {
+    let rawValue = this.priceInputs[index].replace(',', '.'); 
+    this.rawPriceInput[index] = parseFloat(rawValue) || 0; 
+    this.priceInputs[index] = this.getFormattedPrice(index);
   }
 
-  handleQuantityFocus(itemName: string) {
-    if (this.rawQuantityInput[itemName] === "0") {
-      this.rawQuantityInput[itemName] = "";
+  handleQuantityFocus(index: number) {
+    if (this.rawQuantityInput[index] === "0") {
+      this.rawQuantityInput[index] = "";
     }
   }
 
-  handleQuantityBlur(itemName: string) {
-    if (!this.rawQuantityInput[itemName]) {
-      this.rawQuantityInput[itemName] = "0";
+  handleQuantityBlur(index: number) {
+    if (!this.rawQuantityInput[index]) {
+      this.rawQuantityInput[index] = "0";
     }
   }
 
-  getFormattedPrice(itemName: string): string {
-    const price = this.rawPriceInput[itemName] ?? 0;
+  getFormattedPrice(index: number): string {
+    const price = this.rawPriceInput[index] ?? 0;
     return `R$ ${price.toFixed(2).replace('.', ',')}`;
   }   
 
-  updateNameInput(itemName: string, event: any) {
-    this.rawNameInput[itemName] = event?.target.value;
+  updateNameInput(index: number, event: any) {
+    this.rawNameInput[index] = event?.target.value;
   }
   
   parseNumber(value: string): number {
@@ -131,8 +132,8 @@ export class MarketListComponent implements OnInit {
     return Number(value.toFixed(2)); 
   }
   
-  getFormattedQuantity(itemName: string): string {
-    return this.rawQuantityInput[itemName];
+  getFormattedQuantity(index: number): string {
+    return this.rawQuantityInput[index];
   }
 
   addItem() {
@@ -145,19 +146,21 @@ export class MarketListComponent implements OnInit {
     if (this.lista) {
       this.lista.items.push(newItem);
 
-      this.rawNameInput[newItem.name] = newItem.name;
-      this.rawPriceInput[newItem.name] = 0.00;
-      this.rawQuantityInput[newItem.name] = newItem.quantity.toString();
+      const newIndex = this.lista.items.length - 1;
+
+      this.rawNameInput[newIndex] = newItem.name;
+      this.rawPriceInput[newIndex] = 0.00;
+      this.rawQuantityInput[newIndex] = newItem.quantity.toString();
     }
   }
 
-  toggleItemSelection(itemName: string) {
-    this.selectedItems[itemName] = !this.selectedItems[itemName];
+  toggleItemSelection(index: number) {
+    this.selectedItems[index] = !this.selectedItems[index];
   }
   
   removeItems() {
     if (this.lista) {
-      this.lista.items = this.lista.items.filter(item => !this.selectedItems[item.name]);
+      this.lista.items = this.lista.items.filter((item,index) => !this.selectedItems[index]);
       this.selectedItems = {};
     }
 
@@ -167,9 +170,9 @@ export class MarketListComponent implements OnInit {
   calculateTotal() {
     let total = 0;
     if (this.lista) {
-      this.lista.items.forEach(item => {
-        const itemPrice = this.rawPriceInput[item.name]; 
-        const itemQuantity = parseInt(this.rawQuantityInput[item.name]) || 0;
+      this.lista.items.forEach((item, index) => {
+        const itemPrice = this.rawPriceInput[index]; 
+        const itemQuantity = parseInt(this.rawQuantityInput[index]) || 0;
         
         if (itemQuantity > 0) {
           total += itemPrice * itemQuantity;
@@ -219,7 +222,7 @@ export class MarketListComponent implements OnInit {
       alert('Todos os itens precisam ter nome, quantidade e preço válidos.');
       return;
     }
-  
+
     const listaFinalizada: FinishedMarketList = {
       id: this.lista.id,
       description: this.lista.description,

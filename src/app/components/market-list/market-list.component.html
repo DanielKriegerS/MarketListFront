@@ -5,79 +5,75 @@
     <div id="total-value" class="w-50 mb-0">
       <h6>Total: R${{ lista?.totalValue || '0.00'}}</h6>
     </div>
-    <div class="list-group-item" *ngFor="let item of lista?.items">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="flex-grow-1 col-3">
-          <h5 *ngIf="!editState[item.name]" class="mb-0">{{ item.name }}</h5>
-          <input 
-            *ngIf="editState[item.name]" 
-            type="text" 
-            class="form-control col-lg-8"
-            [(ngModel)]="rawNameInput[item.name]"
-            (input)="updateNameInput(item.name, $event)"
-          >
-        </div>
-        <div>
-          <button 
-            class="btn btn-primary btn-sm me-2" 
-            (click)="toggleEdit(item.name)"
-            [disabled]="editState[item.name]"
-          >
-            Editar
-          </button>
-          <button 
-            class="btn btn-success btn-sm" 
-            (click)="confirmEdit(item.name)" 
-            [disabled]="!editState[item.name]"
-          >
-            {{ editState[item.name] ? 'Confirmar' : 'Comprado' }}
-          </button>
-          <button
-            class="btn btn-danger btn-sm ms-2"
-            (click)="toggleItemSelection(item.name)"
-            [class.active]="selectedItems[item.name]"
-          >
-            {{ selectedItems[item.name] ? 'Desmarcar' : 'Selecionar' }}
-          </button>
-        </div>
-      </div>
 
-      <div class="mt-2 d-flex flex-column gap-2">
-        <div class="d-flex align-items-center gap-2">
-          <label for="quantity-{{ item.name }}" class="form-label mb-0" style="width: 100px;">Quantidade:</label>
-          <input 
-            id="quantity-{{ item.name }}" 
-            type="number" 
-            class="form-control w-50" 
-            [value]="getFormattedQuantity(item.name) || 0"
-            [disabled]="!editState[item.name]"
-            (focus)="handleQuantityFocus(item.name)"
-            (blur)="handleQuantityBlur(item.name)"
-            (input)="updateQuantityInput(item.name, $event)"
-          >
-        </div>
+<div class="list-group-item" *ngFor="let item of lista?.items; let i = index">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="flex-grow-1 col-3">
+      <h5 *ngIf="!editState[i]" class="mb-0">{{ item.name }}</h5>
+      <input
+        *ngIf="editState[i]" 
+        type="text" 
+        class="form-control col-lg-8"
+        [(ngModel)]="rawNameInput[i]"
+      >
+    </div>
+    <div>
+      <button
+        class="btn btn-primary btn-sm me-2" 
+        (click)="toggleEdit(i)"
+        [disabled]="editState[i]">
+        Editar
+      </button>
 
-        <div class="d-flex align-items-center gap-2">
-          <label for="price-{{ item.name }}" class="form-label mb-0" style="width: 100px;">Valor:</label>
-          <input 
-            id="price-{{ item.name }}" 
-            type="text" 
-            class="form-control w-50" 
-            [(ngModel)]="priceInputs[item.name]" 
-            (focus)="handlePriceFocus(item.name)"
-            (blur)="handlePriceBlur(item.name)"
-            [disabled]="!editState[item.name]"
-            (input)="updatePriceInput(item.name, $event)"
-          >
-        </div>
-      </div>
+      <button 
+        class="btn btn-success btn-sm" 
+        (click)="confirmEdit(i)" 
+        [disabled]="!editState[i]">
+        {{ editState[i] ? 'Confirmar' : 'Comprado' }}
+      </button>
+
+      <button
+        class="btn btn-danger btn-sm ms-2"
+        (click)="toggleItemSelection(i)"
+        [class.active]="selectedItems[i]">
+        {{ selectedItems[i] ? 'Desmarcar' : 'Selecionar' }}
+      </button>
     </div>
   </div>
 
-  <div class="mt-4 d-grid gap-3">
-    <button class="btn btn-outline-primary btn-lg" (click)="addItem()">Adicionar Item</button>
-    <button class="btn btn-outline-danger btn-lg" (click)="removeItems()">Remover Itens</button>
-    <button class="btn btn-primary btn-lg" (click)="saveList()">Salvar</button>
-    <button class="btn btn-success btn-lg" (click)="finalizeShopping()">Finalizar Compras</button>
+  <div class="mt-2 d-flex flex-column gap-2">
+    <div class="d-flex align-items-center gap-2">
+      <label for="quantity-{{ item.name }}" class="form-label mb-0" style="width: 100px;">Quantidade:</label>
+      <input 
+        id="quantity-{{ item.name }}" 
+        type="number" 
+        class="form-control w-50" 
+        [value]="getFormattedQuantity(i) || 0"
+        [disabled]="!editState[i]"
+        (focus)="handleQuantityFocus(i)"
+        (blur)="handleQuantityBlur(i)"
+        (input)="updateQuantityInput(i, $event)">
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <label for="price-{{ item.name }}" class="form-label mb-0" style="width: 100px;">Valor:</label>
+      <input 
+        id="price-{{ item.name }}" 
+        type="text" 
+        class="form-control w-50" 
+        [(ngModel)]="priceInputs[i]" 
+        (focus)="handlePriceFocus(i)"
+        (blur)="handlePriceBlur(i)"
+        [disabled]="!editState[i]"
+        (input)="updatePriceInput(i, $event)">
+    </div>
   </div>
+</div>
+
+<div class="mt-4 d-grid gap-3">
+  <button class="btn btn-outline-primary btn-lg" (click)="addItem()">Adicionar Item</button>
+  <button class="btn btn-outline-danger btn-lg" (click)="removeItems()">Remover Itens</button>
+  <button class="btn btn-primary btn-lg" (click)="saveList()">Salvar</button>
+  <button class="btn btn-success btn-lg" (click)="finalizeShopping()">Finalizar Compras</button>
+</div>
 </div>
