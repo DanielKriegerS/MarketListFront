@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FinishedMarketList } from '../../models/FinishedMarketList';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
+import { Item } from '../../models/Item';
 
 @Component({
   selector: 'app-market-list',
@@ -20,7 +21,7 @@ export class MarketListComponent implements OnInit {
   rawPriceInput: { [key: number]: number } = {};
   rawQuantityInput: { [key: number]: string } = {};
   rawNameInput: { [key: number]: string } = {};
-  selectedItems: { [key: number]: boolean } = {}; 
+  selectedItems = new Set<Item>(); 
   totalPrice: { [key: number]: number} = {}; 
   priceInputs: { [key: number]: string } = {};
 
@@ -55,27 +56,32 @@ export class MarketListComponent implements OnInit {
   
   toggleEdit(index: number) {
     this.editState[index] = !this.editState[index];
+  
     if (this.editState[index]) return;
   
-    const item = this.lista?.items[index];
+    if (!this.lista) return;
+    
+    const item = this.lista.items[index];
     if (!item) return;
   
-    if (!this.rawNameInput[index]) {
-      this.rawNameInput[index] = item.name;
+    if (!this.rawNameInput[index]?.trim()) {
       alert("O nome deve ser preenchido");
       return;
     }
   
-    item.price = this.rawPriceInput[index] ?? 0;
-    item.quantity = parseInt(this.rawQuantityInput[index]) || 0;
-    item.name = this.rawNameInput[index] ?? item.name;
+    const updatedPrice = this.rawPriceInput[index] || 0;
+    const updatedQuantity = parseInt(this.rawQuantityInput[index]) || 0;
   
-    this.rawPriceInput[index] = item.price;
-    this.rawQuantityInput[index] = item.quantity.toString();
+    item.price = updatedPrice;
+    item.quantity = updatedQuantity;
+    item.name = this.rawNameInput[index].trim();
+  
+    this.rawPriceInput[index] = parseFloat(updatedPrice.toFixed(2));
+    this.rawQuantityInput[index] = updatedQuantity.toString();
   
     this.updateTotal();
   }
-  
+    
   confirmEdit(index: number) {
     this.toggleEdit(index);
     this.updateTotal();
@@ -154,16 +160,33 @@ export class MarketListComponent implements OnInit {
     }
   }
 
-  toggleItemSelection(index: number) {
-    this.selectedItems[index] = !this.selectedItems[index];
-  }
-  
-  removeItems() {
-    if (this.lista) {
-      this.lista.items = this.lista.items.filter((item,index) => !this.selectedItems[index]);
-      this.selectedItems = {};
+  toggleItemSelection(item: Item) {
+    if (this.selectedItems.has(item)) {
+      this.selectedItems.delete(item);
+    } else {
+      this.selectedItems.add(item);
     }
+  }
 
+  removeItems() {
+    if (!this.lista) return;
+  
+    this.lista.items = this.lista.items.filter((item) => !this.selectedItems.has(item));
+  
+    this.selectedItems.clear();
+  
+    this.rawNameInput = {};
+    this.rawPriceInput = {};
+    this.rawQuantityInput = {};
+    this.priceInputs = {};
+    
+    this.lista.items.forEach((item, index) => {
+      this.rawNameInput[index] = item.name;
+      this.rawPriceInput[index] = parseFloat(item.price.toFixed(2));
+      this.rawQuantityInput[index] = item.quantity.toString();
+      this.priceInputs[index] = this.getFormattedPrice(index);
+    });
+  
     this.updateTotal();
   }
 

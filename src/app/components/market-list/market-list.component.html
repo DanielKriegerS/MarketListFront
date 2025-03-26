@@ -34,9 +34,9 @@
 
       <button
         class="btn btn-danger btn-sm ms-2"
-        (click)="toggleItemSelection(i)"
-        [class.active]="selectedItems[i]">
-        {{ selectedItems[i] ? 'Desmarcar' : 'Selecionar' }}
+        (click)="toggleItemSelection(item)"
+        [class.active]="selectedItems.has(item)">
+        {{ selectedItems.has(item) ? 'Desmarcar' : 'Selecionar' }}
       </button>
     </div>
   </div>
