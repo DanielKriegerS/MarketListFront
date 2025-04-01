@@ -66,6 +66,7 @@ export class MarketListComponent implements OnInit {
   
     if (!this.rawNameInput[index]?.trim()) {
       alert("O nome deve ser preenchido");
+      this.rawNameInput[index] = item.name;
       return;
     }
   
