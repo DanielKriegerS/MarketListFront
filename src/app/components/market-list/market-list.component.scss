@@ -16,3 +16,29 @@
         }
     }
 }
+
+@media screen and (max-width: 768px) {
+    .d-flex.align-items-center {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .editing input {
+        width: 200px;
+    }
+
+    .editing .btn-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        width: 100px;
+    }
+
+    .editing .btn-group button {
+        width: 100%; 
+    }
+}
+
