@@ -4,10 +4,11 @@ import { MarketListItem } from '../../models/MarketListItem';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MarketListService } from '../../services/market-list.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-market-list-create',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './market-list-create.component.html',
   styleUrl: './market-list-create.component.scss'
 })

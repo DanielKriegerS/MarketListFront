@@ -8,7 +8,7 @@
       <label for="newItem" class="form-label">Novo Item:</label>
       <div class="input-group">
         <input type="text" id="newItem" class="form-control" [(ngModel)]="newItemName">
-        <button class="btn btn-primary" (click)="addItem()">Adicionar</button>
+        <button class="btn btn-primary" (click)="addItem()"><i class="fa-solid fa-square-plus"></i></button>
       </div>
     </div>
   
@@ -21,6 +21,6 @@
       </ul>
     </div>
   
-    <button class="btn btn-success" (click)="saveMarketList()">Salvar Lista</button>
+    <button class="btn btn-success col-lg-3" (click)="saveMarketList()"><i class="fa-solid fa-square-check"></i></button>
   </div>
   
