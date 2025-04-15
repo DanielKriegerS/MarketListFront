@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MarketList } from '../models/MarketList';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketListService {
    marketList: MarketList = {id:'', description: '', items: [], createDate: '', totalValue: 0.00};
-   endpoint: string = 'http://localhost:8080/market-lists';
+   endpoint: string =  environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
