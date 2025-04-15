@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
 import { FinishedMarketList } from '../../models/FinishedMarketList';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-market-list-all',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, FontAwesomeModule],
   templateUrl: './market-list-all.component.html',
   styleUrl: './market-list-all.component.scss'
 })

@@ -6,15 +6,17 @@
   <ul>
     <ng-container *ngIf="!isFinishedList">
       <li *ngFor="let list of marketLists" class="row mb-3">
-        <div id="item" class="col-8">
+        <div id="item" class="col-8 row">
           <p class="mx-2 my-auto">
-            {{ list.description }} - {{ list.items.length }} itens --
-            {{ list.createDate | date: 'dd/MM/yy' }}
-          </p>
+            <h6 class="item-attr col-lg-4 col-6">{{ list.description }} </h6> <h6 class="item-attr col-lg-2 col-6">{{ list.items.length }} itens </h6>
+            <h6 class="item-attr col-lg-2">{{ list.createDate | date: 'dd/MM/yy' }} </h6> 
+            <h6 class="item-attr col-lg-2"><strong>Total: {{ list.totalValue | currency: 'BRL' }}</strong></h6>
         </div>
 
-        <div class="btn-div col-4">
-          <button class="btn btn-success col-10" [routerLink]="['/market-list', list.id]"> > </button>
+        <div class="btn-div col-lg-4">
+          <button class="btn btn-success col-lg-10" [routerLink]="['/market-list', list.id]">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
         </div>
       </li>
     </ng-container>
@@ -23,15 +25,18 @@
       <li *ngFor="let list of finishedMarketLists" class="row mb-3">
         <div id="item" class="col-8">
           <p class="mx-2 my-auto">
-            {{ list.description }} - {{ list.items.length }} itens --
-            {{ list.finishDate| date: 'dd/MM/yy' }}
+            {{ list.description }} - {{ list.items.length }} itens -- 
+            {{ list.finishDate | date: 'dd/MM/yy' }} -- 
+            <strong>Total: {{ list.totalValue | currency: 'BRL' }}</strong>
           </p>
         </div>
 
-        <div class="btn-div col-4">
-          <button class="btn btn-success col-10" [routerLink]="['/finished-market-list', list.id]"> > </button>
+        <div class="btn-div col-lg-4 align justify-content-center">
+          <button class="btn btn-success col-lg-10" [routerLink]="['/finished-market-list', list.id]">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
         </div>
-              </li>
+      </li>
     </ng-container>
   </ul>
 </div>

@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { FinishedMarketList } from '../../models/FinishedMarketList';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
 import { Item } from '../../models/Item';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-market-list',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   templateUrl: './market-list.component.html',
   styleUrl: './market-list.component.scss'
 })
