@@ -41,7 +41,7 @@ export class MarketListCreateComponent {
 
     const date = this.marketList.createDate;
 
-    this.marketList = { id:'', description: '', items: [], createDate: date, totalValue: 0.00 };
+    this.marketList = { id:'', description: '', items: [], createDate: 0, totalValue: 0.00 };
     
   }
 }
