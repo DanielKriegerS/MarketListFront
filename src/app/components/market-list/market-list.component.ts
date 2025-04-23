@@ -252,7 +252,7 @@ export class MarketListComponent implements OnInit {
       id: this.lista.id,
       description: this.lista.description,
       items: this.lista.items,
-      finishDate: Date.now(),
+      finishDate: new Date().toISOString(),
       totalValue: this.lista.items.reduce((sum, item) => sum + (item.quantity * item.price), 0)
     };
   

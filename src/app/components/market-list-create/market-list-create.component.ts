@@ -13,7 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './market-list-create.component.scss'
 })
 export class MarketListCreateComponent {
-  marketList: MarketList = {id:'', description: '', items: [], createDate: 0, totalValue: 0.00 };
+  marketList: MarketList = {id:'', description: '', items: [], createDate: new Date().toISOString(), totalValue: 0.00 };
   newItemName: string = '';
 
   constructor(private service: MarketListService) {}
@@ -41,7 +41,7 @@ export class MarketListCreateComponent {
 
     const date = this.marketList.createDate;
 
-    this.marketList = { id:'', description: '', items: [], createDate: 0, totalValue: 0.00 };
+    this.marketList = { id:'', description: '', items: [], createDate: '', totalValue: 0.00 };
     
   }
 }

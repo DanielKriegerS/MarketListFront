@@ -4,6 +4,6 @@ export interface FinishedMarketList {
     id:string;
     description: string;
     items: MarketListItem[];
-    finishDate: number;
+    finishDate: string;
     totalValue: number;
 }

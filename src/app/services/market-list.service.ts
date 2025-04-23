@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class MarketListService {
-   marketList: MarketList = {id:'', description: '', items: [], createDate: 0, totalValue: 0.00};
+   marketList: MarketList = {id:'', description: '', items: [], createDate: '', totalValue: 0.00};
    endpoint: string =  `${environment.apiUrl}market-lists`;
 
   constructor(private http: HttpClient) { }
@@ -17,7 +17,7 @@ export class MarketListService {
     this.http.post(this.endpoint, this.marketList)
     .subscribe(response => {
       alert('Lista criada com sucesso!');
-      this.marketList = {id:'', description: '', items: [], createDate: Date.now(), totalValue: 0.00 };
+      this.marketList = {id:'', description: '', items: [], createDate: new Date().toISOString(), totalValue: 0.00 };
     }, error => {
       console.error('Erro ao salvar:', error);
 
