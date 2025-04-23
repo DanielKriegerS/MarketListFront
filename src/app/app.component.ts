@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {  RouterOutlet } from '@angular/router';
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { environment } from '../environment.prod';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,10 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'market-list';
+
+  ngOnInit(): void {
+    console.log('API URL em uso:', environment.apiUrl);
+  }
 }
