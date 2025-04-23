@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class MarketListService {
    marketList: MarketList = {id:'', description: '', items: [], createDate: '', totalValue: 0.00};
-   endpoint: string =  `${environment.apiUrl}Smarket-lists`;
+   endpoint: string =  `${environment.apiUrl}market-lists`;
 
   constructor(private http: HttpClient) { }
 
