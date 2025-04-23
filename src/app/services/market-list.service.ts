@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MarketList } from '../models/MarketList';
 import { Observable } from 'rxjs';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,7 @@ export class MarketListService {
       this.marketList = {id:'', description: '', items: [], createDate: '', totalValue: 0.00 };
     }, error => {
       console.error('Erro ao salvar:', error);
+
       alert('Erro ao salvar a lista.');
     });
   }
