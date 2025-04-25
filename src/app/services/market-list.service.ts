@@ -20,6 +20,7 @@ export class MarketListService {
       this.marketList = {id:'', description: '', items: [], createDate: new Date().toISOString(), totalValue: 0.00 };
     }, error => {
       console.error('Erro ao salvar:', error);
+      console.log(this.marketList.createDate);
 
       alert('Erro ao salvar a lista.');
     });
