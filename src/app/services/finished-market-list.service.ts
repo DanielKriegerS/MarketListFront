@@ -1,25 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FinishedMarketList } from '../models/FinishedMarketList';
+import { MarketList } from '../models/MarketList';
 import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FinishedMarketListService {
-   finishedEndpoint: string = environment.apiUrl;
+  finishedEndpoint: string =  `${environment.apiUrl}/market-lists`;
   constructor(private http: HttpClient) { }
 
-  saveFinishedMarketList(finishedList: FinishedMarketList): Observable<FinishedMarketList> {
-    return this.http.post<FinishedMarketList>(this.finishedEndpoint, finishedList);
+  getFinishedMarketLists(): Observable<MarketList[]> {
+    return this.http.get<MarketList[]>(`${this.finishedEndpoint}/finished-lists`);
   }
 
-  getFinishedMarketLists(): Observable<FinishedMarketList[]> {
-    return this.http.get<FinishedMarketList[]>(this.finishedEndpoint);
+  getFinishedMarketListById(id: string): Observable<MarketList> {
+    return this.http.get<MarketList>(`${this.finishedEndpoint}/${id}`);
   }
 
-  getFinishedMarketListById(id: string): Observable<FinishedMarketList> {
-    return this.http.get<FinishedMarketList>(`${this.finishedEndpoint}/${id}`);
+  finishList(id: string){
+    return this.http.patch<MarketList>(`${this.finishedEndpoint}/${id}`, {});
   }
 }

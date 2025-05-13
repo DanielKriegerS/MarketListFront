@@ -2,7 +2,7 @@
     <div class="card">
       <div class="card-header">
         <h4>{{ list.description }}</h4>
-        <p class="text-muted">Encerrada em: {{ list.finishDate | date:'dd/MM/yy' }}</p>
+        <p class="text-muted">Encerrada em: {{ list.date | date:'dd/MM/yy' }}</p>
         <h5>Total: {{ list.totalValue | currency:'BRL' }}</h5>
       </div>
       <div class="card-body">

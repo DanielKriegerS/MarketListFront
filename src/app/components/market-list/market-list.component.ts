@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MarketListService } from '../../services/market-list.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FinishedMarketList } from '../../models/FinishedMarketList';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
 import { Item } from '../../models/Item';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -248,32 +247,9 @@ export class MarketListComponent implements OnInit {
       return;
     }
 
-    const listaFinalizada: FinishedMarketList = {
-      id: this.lista.id,
-      description: this.lista.description,
-      items: this.lista.items,
-      finishDate: new Date().toISOString(),
-      totalValue: this.lista.items.reduce((sum, item) => sum + (item.quantity * item.price), 0)
-    };
-  
-    this.finishedMarketListService.saveFinishedMarketList(listaFinalizada).subscribe({
-      next: () => {
-        if (this.itemId) {
-          this.marketListService.finishMarketList(this.itemId).subscribe(
-            () => {
-            },
-            (error) => {
-              console.error('Erro ao remover lista das abertas:', error);
-            }
-          );
-        }
-  
-        alert('Compra finalizada com sucesso!');
-        this.router.navigate(['/']); 
-      },
-      error: () => {
-        alert('Erro ao finalizar a compra. Tente novamente.');
-      }
-    });
+    this.finishedMarketListService.finishList(this.lista.id);
+    
+    alert('Compra finalizada com sucesso!');
+    this.router.navigate(['/']); 
   }  
 }  

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FinishedMarketList } from '../../models/FinishedMarketList';
+import { MarketList } from '../../models/MarketList'; 
 import { ActivatedRoute } from '@angular/router';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./finished-market-list.component.css']
 })
 export class FinishedMarketListComponent {
-  list!: FinishedMarketList | null;
+  list!: MarketList | null;
 
   constructor(
     private route: ActivatedRoute,

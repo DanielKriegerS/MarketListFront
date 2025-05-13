@@ -4,7 +4,6 @@ import { MarketListService } from '../../services/market-list.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
-import { FinishedMarketList } from '../../models/FinishedMarketList';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
@@ -15,7 +14,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class MarketListAllComponent {
   marketLists: MarketList[] = [];
-  finishedMarketLists: FinishedMarketList[] = [];
   isFinishedList: boolean = false;
 
   constructor(
@@ -35,7 +33,7 @@ export class MarketListAllComponent {
     if (this.isFinishedList) {
       this.finishedMarketListService.getFinishedMarketLists().subscribe(
         data => {
-          this.finishedMarketLists = data;
+          this.marketLists = data;
         },
         error => {
           console.error('Erro ao buscar listas finalizadas:', error);

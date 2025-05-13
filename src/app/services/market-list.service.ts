@@ -8,25 +8,27 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class MarketListService {
-   marketList: MarketList = {id:'', description: '', items: [], createDate: '', totalValue: 0.00};
-   endpoint: string =  `${environment.apiUrl}market-lists`;
+   marketList: MarketList = {id:'', description: '', items: [], date: '', totalValue: 0.00, isFinished: false};
+   endpoint: string =  `${environment.apiUrl}/market-lists`;
 
   constructor(private http: HttpClient) { }
 
   createMarketList() {
     this.http.post(this.endpoint, this.marketList)
     .subscribe(response => {
+      console.log(this.marketList);
       alert('Lista criada com sucesso!');
-      this.marketList = {id:'', description: '', items: [], createDate: new Date().toISOString(), totalValue: 0.00 };
+      this.marketList = {id:'', description: '', items: [], date: new Date().toISOString(), totalValue: 0.00, isFinished: false };
     }, error => {
       console.error('Erro ao salvar:', error);
-      console.log(this.marketList.createDate);
+      console.log(this.marketList.date);
 
       alert('Erro ao salvar a lista.');
     });
   }
 
   getMarketLists(): Observable<MarketList[]> {
+    console.log(this.endpoint)
     return this.http.get<MarketList[]>(this.endpoint);
   }
 
@@ -37,8 +39,4 @@ export class MarketListService {
   updateMarketList(id: string, updatedList: MarketList): Observable<MarketList> {
     return this.http.put<MarketList>(`${this.endpoint}/${id}`, updatedList);
   }  
-
-  finishMarketList(id: string): Observable<MarketList> {
-    return this.http.delete<MarketList>(`${this.endpoint}/${id}`);
-  }
 }
