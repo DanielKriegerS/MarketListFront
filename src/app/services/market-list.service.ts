@@ -14,15 +14,12 @@ export class MarketListService {
   constructor(private http: HttpClient) { }
 
   createMarketList() {
-    this.http.post(this.endpoint, this.marketList)
+    this.http.post<MarketList>(this.endpoint, this.marketList)
     .subscribe(response => {
-      console.log(this.marketList);
+      this.marketList = response;
       alert('Lista criada com sucesso!');
-      this.marketList = {id:'', description: '', items: [], date: new Date().toISOString(), totalValue: 0.00, isFinished: false };
     }, error => {
       console.error('Erro ao salvar:', error);
-      console.log(this.marketList.date);
-
       alert('Erro ao salvar a lista.');
     });
   }
