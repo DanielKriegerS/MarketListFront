@@ -25,7 +25,6 @@ export class MarketListService {
   }
 
   getMarketLists(): Observable<MarketList[]> {
-    console.log(this.endpoint)
     return this.http.get<MarketList[]>(this.endpoint);
   }
 
