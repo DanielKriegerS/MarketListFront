@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MarketList } from '../models/MarketList';
+import { ListSummaryDTO } from '../models/ListSummaryDTO';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketListService {
    marketList: MarketList = {id:'', description: '', items: [], date: '', totalValue: 0.00, isFinished: false};
+   ListSummary: ListSummaryDTO = {id:'', description: '', date: '', totalValue: 0.00, isFinished: false};
    endpoint: string =  `${environment.apiUrl}/market-lists`;
 
   constructor(private http: HttpClient) { }
@@ -24,8 +27,8 @@ export class MarketListService {
     });
   }
 
-  getMarketLists(): Observable<MarketList[]> {
-    return this.http.get<MarketList[]>(this.endpoint);
+  getOpenMarketLists(): Observable<ListSummaryDTO[]> {
+    return this.http.get<ListSummaryDTO[]>(this.endpoint);
   }
 
   getMarketListById(id: string): Observable<MarketList> {
