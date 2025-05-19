@@ -247,9 +247,15 @@ export class MarketListComponent implements OnInit {
       return;
     }
 
-    this.finishedMarketListService.finishList(this.lista.id);
+    this.finishedMarketListService.finishList(this.lista.id).subscribe({
+      next: response => {
+        alert('Compra finalizada com sucesso!');
+        this.router.navigate(['/']); 
+      },
+      error: error => {
+        console.error('Erro ao finalizar lista:' , error);
+      }
+    })
     
-    alert('Compra finalizada com sucesso!');
-    this.router.navigate(['/']); 
   }  
 }  
