@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FinishedMarketListService } from '../../services/finished-market-list.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ListSummaryDTO } from '../../models/ListSummaryDTO';
 
 @Component({
   selector: 'app-market-list-all',
@@ -13,6 +14,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   styleUrl: './market-list-all.component.scss'
 })
 export class MarketListAllComponent {
+  summaryLists: ListSummaryDTO[] = [];
   marketLists: MarketList[] = [];
   isFinishedList: boolean = false;
 
@@ -40,9 +42,9 @@ export class MarketListAllComponent {
         }
       );
     } else {
-      this.marketListService.getMarketLists().subscribe(
+      this.marketListService.getOpenMarketLists().subscribe(
         data => {
-          this.marketLists = data;
+          this.summaryLists = data;
         },
         error => {
           console.error('Erro ao buscar listas abertas:', error);
