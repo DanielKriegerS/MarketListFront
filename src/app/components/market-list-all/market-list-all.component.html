@@ -5,10 +5,10 @@
 <div class="row col-12">
   <ul>
     <ng-container *ngIf="!isFinishedList">
-      <li *ngFor="let list of marketLists" class="row mb-3">
+      <li *ngFor="let list of summaryLists" class="row mb-3">
         <div id="item" class="col-8 row">
           <p class="mx-2 my-auto">
-            <h6 class="item-attr col-lg-4 col-6">{{ list.description }} </h6> <h6 class="item-attr col-lg-2 col-6">{{ list.items.length }} itens </h6>
+            <h6 class="item-attr col-lg-4 col-6">{{ list.description }} </h6> <h6 class="item-attr col-lg-2 col-6">{{ list.totalItems }} itens </h6>
             <h6 class="item-attr col-lg-2">{{ list.date | date: 'dd/MM/yy' }} </h6> 
             <h6 class="item-attr col-lg-2"><strong>Total: {{ list.totalValue | currency: 'BRL' }}</strong></h6>
         </div>

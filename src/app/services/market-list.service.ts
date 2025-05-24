@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class MarketListService {
    marketList: MarketList = {id:'', description: '', items: [], date: '', totalValue: 0.00, isFinished: false};
-   ListSummary: ListSummaryDTO = {id:'', description: '', date: '', totalValue: 0.00, isFinished: false};
+   ListSummary: ListSummaryDTO = {id:'', description: '', date: '', totalValue: 0.00, totalItems: 0, isFinished: false};
    endpoint: string =  `${environment.apiUrl}/market-lists`;
 
   constructor(private http: HttpClient) { }
@@ -28,7 +28,7 @@ export class MarketListService {
   }
 
   getOpenMarketLists(): Observable<ListSummaryDTO[]> {
-    return this.http.get<ListSummaryDTO[]>(this.endpoint);
+    return this.http.get<ListSummaryDTO[]>(`${this.endpoint}/open-lists`);
   }
 
   getMarketListById(id: string): Observable<MarketList> {

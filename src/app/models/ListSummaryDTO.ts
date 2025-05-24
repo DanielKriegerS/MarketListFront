@@ -3,5 +3,6 @@ export interface ListSummaryDTO {
     description: string;
     date: string;
     totalValue: number;
+    totalItems: number;
     isFinished: boolean;
   }
