@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MarketList } from '../../models/MarketList';
 import { MarketListService } from '../../services/market-list.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
