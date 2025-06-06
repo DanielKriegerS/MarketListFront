@@ -15,7 +15,6 @@ import { ListSummaryDTO } from '../../models/ListSummaryDTO';
 })
 export class MarketListAllComponent {
   summaryLists: ListSummaryDTO[] = [];
-  marketLists: MarketList[] = [];
   isFinishedList: boolean = false;
 
   constructor(
@@ -35,7 +34,7 @@ export class MarketListAllComponent {
     if (this.isFinishedList) {
       this.finishedMarketListService.getFinishedMarketLists().subscribe(
         data => {
-          this.marketLists = data;
+          this.summaryLists = data;
         },
         error => {
           console.error('Erro ao buscar listas finalizadas:', error);
