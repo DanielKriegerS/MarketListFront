@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MarketList } from '../models/MarketList';
 import { ListSummaryDTO } from '../models/ListSummaryDTO';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { HateoasCollection } from '../models/hateoas-collection.model';
 
 
 @Injectable({
@@ -28,7 +29,15 @@ export class MarketListService {
   }
 
   getOpenMarketLists(): Observable<ListSummaryDTO[]> {
-    return this.http.get<ListSummaryDTO[]>(`${this.endpoint}/open-lists`);
+    return this.http.get<HateoasCollection<ListSummaryDTO[]>>(`${this.endpoint}/open-lists`).pipe(
+      map((response) => {
+        const embeddedKey = Object.keys(response._embedded)[0];
+        return response._embedded[embeddedKey].map((resource: any) => {
+          const {_links, ...entity} = resource;
+          return entity as ListSummaryDTO;
+        });
+      })
+    );
   }
 
   getMarketListById(id: string): Observable<MarketList> {
