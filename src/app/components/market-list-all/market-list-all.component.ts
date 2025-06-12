@@ -31,7 +31,7 @@ export class MarketListAllComponent {
 
   loadMarketLists() {
     if (this.isFinishedList) {
-      this.finishedMarketListService.getFinishedMarketLists().subscribe(
+      this.finishedMarketListService.getFinishedLists().subscribe(
         data => {
           this.summaryLists = data;
         },

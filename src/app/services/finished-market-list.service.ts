@@ -12,7 +12,7 @@ export class FinishedMarketListService {
   finishedEndpoint: string =  `${environment.apiUrl}/market-lists`;
   constructor(private http: HttpClient) { }
 
-  getFinishedMarketLists(): Observable<ListSummaryDTO[]> {
+  getFinishedLists(): Observable<ListSummaryDTO[]> {
     return this.http.get<ListSummaryDTO[]>(`${this.finishedEndpoint}/finished-lists`);
   }
 
