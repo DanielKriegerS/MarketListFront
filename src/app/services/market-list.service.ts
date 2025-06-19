@@ -5,6 +5,7 @@ import { ListSummaryDTO } from '../models/ListSummaryDTO';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HateoasCollection } from '../models/hateoas-collection.model';
+import { HateoasResource } from '../models/hateoas-resource.model';
 
 
 @Injectable({
@@ -41,7 +42,12 @@ export class MarketListService {
   }
 
   getMarketListById(id: string): Observable<MarketList> {
-    return this.http.get<MarketList>(`${this.endpoint}/${id}`);
+    return this.http.get<HateoasResource<MarketList>>(`${this.endpoint}/${id}`).pipe(
+      map((response) => {
+        const {_links, ...entity } = response;
+        return entity as MarketList;
+      })
+    );
   }
 
   updateMarketList(id: string, updatedList: MarketList): Observable<MarketList> {
