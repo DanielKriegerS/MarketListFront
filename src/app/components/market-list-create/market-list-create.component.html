@@ -1,13 +1,15 @@
 <div class="row container mt-3 justify-content-center col-lg-6">
     <div class="mb-3">
       <label for="description" class="form-label">Lista:</label>
-      <input type="text" id="description" class="form-control" [(ngModel)]="marketList.description">
+      <input type="text" id="description" class="form-control" [(ngModel)]="marketList.description" (blur)="validateDescription()"
+      [style.border]="isDescBlurred ? '2px solid red' : '1px solid gray'">
     </div>
   
     <div class="mb-3">
       <label for="newItem" class="form-label">Novo Item:</label>
       <div class="input-group">
-        <input type="text" id="newItem" class="form-control" [(ngModel)]="newItemName">
+        <input type="text" id="newItem" class="form-control" [(ngModel)]="newItemName" (blur)="validateItemName()"
+        [style.border]="isItemNameBlurred ? '2px solid red' : '1px solid gray'">
         <button class="btn btn-primary" (click)="addItem()"><i class="fa-solid fa-square-plus"></i></button>
       </div>
     </div>
