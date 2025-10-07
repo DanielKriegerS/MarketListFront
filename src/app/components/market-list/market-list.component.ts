@@ -320,12 +320,18 @@ export class MarketListComponent implements OnInit {
       return;
     }
   
-    const itensInvalidos = this.lista.items.filter(item => 
+    const validList = this.lista.items.filter(item => 
       !item.name.trim() || !item.quantity || !item.price
     );
   
-    if (itensInvalidos.length > 0) {
+    if (validList.length > 0) {
       alert('Todos os itens precisam ter nome, quantidade e preço válidos.');
+      return;
+    }
+
+    let validItems = this.validateItems();
+
+    if (!validItems) {
       return;
     }
 
