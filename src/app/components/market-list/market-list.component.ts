@@ -26,6 +26,8 @@ export class MarketListComponent implements OnInit {
   priceInputs: { [key: number]: string } = {};
   invalidQuantities: boolean [] = [];
   invalidPrices: boolean [] = [];
+  quantityValues: number [] = [];
+  priceValues: number [] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -93,7 +95,8 @@ export class MarketListComponent implements OnInit {
   }  
   
   updatePriceInput(index: number, event: any) {
-    this.validatePriceInput(event.target.value, index);
+    this.priceValues[index] = parseFloat(event.target.value.replace(',', '.')) || 0;
+    this.validatePriceInput(this.priceValues[index], index);
     let value = event.target.value.replace(/[^0-9,]/g, "").replace(',', '.'); 
     this.rawPriceInput[index] = parseFloat(value) || 0;
     this.updateTotal(); 
@@ -108,7 +111,8 @@ export class MarketListComponent implements OnInit {
   }
   
   updateQuantityInput(index: number, event: any) {
-    this.validateQuantityInput(event.target.value, index);
+    this.quantityValues[index] = parseInt(event.target.value) || 0;
+    this.validateQuantityInput(this.quantityValues[index], index);
     let value = event.target.value.replace(/[^0-9]/g, "");
     this.rawQuantityInput[index] = value;
     this.updateTotal();
@@ -243,7 +247,13 @@ export class MarketListComponent implements OnInit {
       alert('Não há itens na lista para salvar.');
       return;
     }
-  
+    
+    let validItems = this.validateItems();
+
+    if (!validItems) {
+      return;
+    }
+
     if (this.lista.id) {
       this.marketListService.updateMarketList(this.lista.id, this.lista)
         .subscribe(response => {
@@ -257,6 +267,53 @@ export class MarketListComponent implements OnInit {
     }
   }
       
+  private validateItems() : boolean {
+    if (!this.lista || !this.lista.items) { 
+      alert('Lista inválida.');
+      return false;
+    }
+
+    this.invalidPrices = [];
+    this.invalidQuantities = [];
+
+    for (let i = 0; i < this.lista.items.length; i++) {
+      if (this.priceValues[i] != 0 && this.priceValues[i] != undefined) {
+        this.validatePriceInput(this.priceValues[i], i);
+      }
+
+      if (this.quantityValues[i] != 0 && this.quantityValues[i] != undefined) {
+        this.validateQuantityInput(this.quantityValues[i], i);
+      }
+    }
+
+    let haveInvalidPrice = false; 
+    let haveInvalidQuantity = false;
+    
+    for (let i = 0; i < this.invalidPrices.length; i++) {
+      if (this.invalidPrices[i] === true) {
+        haveInvalidPrice = true;
+      }
+    }
+
+    for (let i = 0; i < this.invalidQuantities.length; i++) {
+      if (this.invalidQuantities[i] === true) {
+        haveInvalidQuantity = true;
+      }
+    }
+
+    if(haveInvalidPrice) {
+      alert('Há um preço inválido na lista.');
+      return false;
+    }
+
+    if(haveInvalidQuantity) {
+      alert('Há uma quantidade inválida na lista.');
+      return false;
+    }
+
+    return true;
+  }
+
   finalizeShopping() {
     if (!this.lista || this.lista.items.length === 0) {
       alert('Não há itens na lista para finalizar a compra.');
