@@ -24,6 +24,8 @@ export class MarketListComponent implements OnInit {
   selectedItems = new Set<Item>(); 
   totalPrice: { [key: number]: number} = {}; 
   priceInputs: { [key: number]: string } = {};
+  invalidQuantities: boolean [] = [];
+  invalidPrices: boolean [] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -48,7 +50,9 @@ export class MarketListComponent implements OnInit {
           this.rawPriceInput[index] = item.price;
           this.rawQuantityInput[index] = item.quantity.toString();
           this.rawNameInput[index] = item.name; 
-          this.priceInputs[index] = this.getFormattedPrice(index);  
+          this.priceInputs[index] = this.getFormattedPrice(index); 
+          this.invalidPrices[index] = false;
+          this.invalidQuantities[index] = false;
         });
       });
     }
@@ -89,23 +93,42 @@ export class MarketListComponent implements OnInit {
   }  
   
   updatePriceInput(index: number, event: any) {
+    this.validatePriceInput(event.target.value, index);
     let value = event.target.value.replace(/[^0-9,]/g, "").replace(',', '.'); 
     this.rawPriceInput[index] = parseFloat(value) || 0;
     this.updateTotal(); 
   }
+
+  private validatePriceInput(value: number, index: number) {
+    if (isNaN(value) || value <= 0) {
+      this.invalidPrices[index] = true;
+    } else {
+      this.invalidPrices[index]= false;
+    }
+  }
   
   updateQuantityInput(index: number, event: any) {
+    this.validateQuantityInput(event.target.value, index);
     let value = event.target.value.replace(/[^0-9]/g, "");
     this.rawQuantityInput[index] = value;
     this.updateTotal();
   }
   
+  private validateQuantityInput(value: number, index: number) {
+    if (isNaN(value) || value <= 0) {
+      this.invalidQuantities[index] = true;
+    } else {
+      this.invalidQuantities[index]= false;
+    }
+  }
+
   handlePriceFocus(index: number) {
     this.priceInputs[index] = this.rawPriceInput[index].toString().replace('.', ',');
   }
 
   handlePriceBlur(index: number) {
     let rawValue = this.priceInputs[index].replace(',', '.'); 
+
     this.rawPriceInput[index] = parseFloat(rawValue) || 0; 
     this.priceInputs[index] = this.getFormattedPrice(index);
   }
@@ -198,6 +221,8 @@ export class MarketListComponent implements OnInit {
         const itemPrice = this.rawPriceInput[index]; 
         const itemQuantity = parseInt(this.rawQuantityInput[index]) || 0;
         
+      
+
         if (itemQuantity > 0) {
           total += itemPrice * itemQuantity;
         }
@@ -255,7 +280,8 @@ export class MarketListComponent implements OnInit {
       error: error => {
         console.error('Erro ao finalizar lista:' , error);
       }
-    })
-    
-  }  
-}  
+    });    
+  } 
+}
+
+

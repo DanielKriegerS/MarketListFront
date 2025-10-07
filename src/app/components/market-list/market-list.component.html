@@ -53,7 +53,8 @@
         [disabled]="!editState[i]"
         (focus)="handleQuantityFocus(i)"
         (blur)="handleQuantityBlur(i)"
-        (input)="updateQuantityInput(i, $event)">
+        (input)="updateQuantityInput(i, $event)"
+        [style.border]="invalidQuantities[i] ? '2px solid red' : '1px solid gray'">
     </div>
 
     <div class="d-flex align-items-center gap-2">
@@ -66,7 +67,8 @@
         (focus)="handlePriceFocus(i)"
         (blur)="handlePriceBlur(i)"
         [disabled]="!editState[i]"
-        (input)="updatePriceInput(i, $event)">
+        (input)="updatePriceInput(i, $event)"
+        [style.border]="invalidPrices[i] ? '2px solid red' : '1px solid gray'">
     </div>
   </div>
 </div>
