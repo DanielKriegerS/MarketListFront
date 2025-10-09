@@ -36,6 +36,7 @@ export class MarketListCreateComponent {
     let validList: boolean = this.validateMarketList();
     if (!validList) {
       alert('Favor verificar informações da lista.');
+      return;
     }
 
     this.service.marketList = this.marketList; 
