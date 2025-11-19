@@ -35,6 +35,20 @@ export const routes: Routes = [
             import('./components/finished-market-list/finished-market-list.component').then(
               (m) => m.FinishedMarketListComponent
             ),
+        },               
+        {
+          path: 'login',
+          loadComponent: () =>
+            import('./components/login/login.component').then(
+              (m) => m.LoginComponent
+            ),
+        },               
+        {
+          path: 'register',
+          loadComponent: () =>
+            import('./components/register/register.component').then(
+              (m) => m.RegisterComponent
+            ),
         },
         {
           path: '**',
