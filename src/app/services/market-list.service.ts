@@ -30,10 +30,20 @@ export class MarketListService {
   }
 
   getOpenMarketLists(): Observable<ListSummaryDTO[]> {
-    return this.http.get<HateoasCollection<ListSummaryDTO[]>>(`${this.endpoint}/open-lists`).pipe(
+    return this.http.get<HateoasCollection<ListSummaryDTO>>(`${this.endpoint}/open-lists`).pipe(
       map((response) => {
-        const embeddedKey = Object.keys(response._embedded)[0];
-        return response._embedded[embeddedKey].map((resource: any) => {
+        if (!response || !response._embedded) {
+          return [] as ListSummaryDTO[];
+        }
+
+        const embeddedKeys = Object.keys(response._embedded);
+        if (embeddedKeys.length === 0) {
+          return [] as ListSummaryDTO[];
+        }
+
+        const embeddedArray = response._embedded[embeddedKeys[0]] as HateoasResource<ListSummaryDTO>[];
+
+        return embeddedArray.map((resource: any) => {
           const {_links, ...entity} = resource;
           return entity as ListSummaryDTO;
         });
