@@ -16,6 +16,10 @@ export class FinishedMarketListService {
   getFinishedLists(): Observable<ListSummaryDTO[]> {
     return this.http.get<HateoasCollection<ListSummaryDTO[]>>(`${this.finishedEndpoint}/finished-lists`).pipe(
           map((response) => {
+            if (!response || !response._embedded) {
+              return [] as ListSummaryDTO[];
+            }
+            
             const embeddedKey = Object.keys(response._embedded)[0];
             return response._embedded[embeddedKey].map((resource: any) => {
               const {_links, ...entity} = resource;
