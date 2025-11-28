@@ -5,15 +5,15 @@
         <div id="input-area" class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-9 mb-3">
-                    <input type="text" placeholder="Username / Email" class="form-control">
+                    <input type="text" placeholder="Username / Email" class="form-control" [(ngModel)]="username">
                 </div>
 
                 <div class="col-12 col-md-9 mb-3">
-                    <input type="password" placeholder="Password" class="form-control">
+                    <input type="password" placeholder="Password" class="form-control" [(ngModel)]="password">
                 </div>
 
                 <div class="col-12 col-md-9 d-flex justify-content-center">
-                    <button class="btn btn-primary px-4">Login</button>
+                    <button class="btn btn-primary px-4" (click)="login()">Login</button>
                 </div>
             </div>
         </div>
