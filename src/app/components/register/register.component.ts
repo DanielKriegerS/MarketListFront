@@ -22,7 +22,7 @@ export class RegisterComponent {
     }
     this.service.register(this.username, this.password).subscribe({
       next: (response) => {
-        alert(response.message);
+        alert('Registro bem-sucedido!');
       },
       error: (error) => {
         alert('Erro ao registrar: ' + error.error.message);

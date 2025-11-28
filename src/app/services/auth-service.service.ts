@@ -16,7 +16,6 @@ export class AuthServiceService {
       return this.http.post<{accessToken: string}>(`${this.endpoint}/login`, {username, password})
       .pipe(
         tap(response => {
-          console.log('Storing token in localStorage:', response);
           localStorage.setItem('authToken', response.accessToken);
         })  
       );

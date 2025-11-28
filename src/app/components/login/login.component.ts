@@ -18,7 +18,7 @@ export class LoginComponent {
   login() {
     this.service.login(this.username, this.password).subscribe({
       next: (response) => {
-        console.log('Login successful, token:', response.accessToken);
+        window.alert('Login efetuado!');
       },
       error: (error) => {
         console.error('Login failed:', error);
