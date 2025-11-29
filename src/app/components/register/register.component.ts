@@ -26,9 +26,6 @@ export class RegisterComponent {
         alert('Registro bem-sucedido!');
       },
       error: (e:ErrorDTO) => {
-        console.log("message: " + e.message);
-        console.log("status: " + e.status);
-
         if( e.status === 409 ){
           alert('Nome de usuário já existe. Por favor, escolha outro.');
           return;
