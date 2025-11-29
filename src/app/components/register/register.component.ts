@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthServiceService } from '../../services/auth-service.service';
+import { ErrorDTO } from '../../models/ErrorDTO';
 
 @Component({
   selector: 'app-register',
@@ -24,8 +25,13 @@ export class RegisterComponent {
       next: (response) => {
         alert('Registro bem-sucedido!');
       },
-      error: (error) => {
-        alert('Erro ao registrar: ' + error.error.message);
+      error: (e:ErrorDTO) => {
+        if( e.status === 409 ){
+          alert('Nome de usuário já existe. Por favor, escolha outro.');
+          return;
+        }
+
+        alert('Erro ao registrar: ' + e.message);
       }
     });
   }
