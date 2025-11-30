@@ -18,15 +18,17 @@
             <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#navbarContent" routerLink="/finished-market-list-all">Ver Compras</a>
           </li>        
 
-          <li class="nav-item col-6 col-lg-2 mx-auto auth" id="register-link">
+          <li *ngIf="!islogged" class="nav-item col-6 col-lg-2 mx-auto auth" id="register-link">
             <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#navbarContent" routerLink="/register">Registrar</a>
           </li>
 
-          <li class="nav-item col-6 col-lg-2 mx-auto auth" id="login-link">
+          <li *ngIf="!islogged" class="nav-item col-6 col-lg-2 mx-auto auth" id="login-link">
             <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#navbarContent" routerLink="/login">Login</a>
           </li>
 
-
+          <li *ngIf="islogged" class="nav-item col-6 col-lg-4 mx-auto auth" id="logout-link">
+            <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#navbarContent" (click)="logout()">Logout</a>
+          </li>
         </ul>
       </div>
     </div>
