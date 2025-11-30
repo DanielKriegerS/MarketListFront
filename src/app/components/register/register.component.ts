@@ -27,12 +27,16 @@ export class RegisterComponent {
       },
       error: (e:ErrorDTO) => {
         if( e.status === 409 ){
-          alert('Nome de usuário já existe. Por favor, escolha outro.');
+          alert('Nome de usuário já existe. Por favor, escolha outro ou faça login.');
           return;
         }
 
         alert('Erro ao registrar: ' + e.message);
       }
     });
+  }
+
+  toLogin() {
+    window.location.href = '/login'; 
   }
 }

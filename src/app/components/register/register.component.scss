@@ -1,3 +1,13 @@
 .form-check-label {
     color: rgba(246, 215, 215, 0.87);
 }
+
+.login-link {
+    color: rgba($color: #110275, $alpha: .7);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-link:hover {
+    color: rgba($color: #0056b3, $alpha: .5);
+}
