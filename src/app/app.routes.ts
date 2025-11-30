@@ -4,10 +4,24 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./components/market-list-create/market-list-create.component').then(
-            (m) => m.MarketListCreateComponent
+          import('./components/auth-callback/auth-callback.component').then(
+            (m) => m.AuthCallbackComponent
           ),
-        },                
+        },
+        {
+          path: 'create-market-list',
+          loadComponent: () =>
+            import('./components/market-list-create/market-list-create.component').then(
+              (m) => m.MarketListCreateComponent
+            ),
+        },
+        {
+          path: 'about-page',
+          loadComponent: () =>
+            import('./components/about-page/about-page.component').then(
+              (m) => m.AboutPageComponent
+            ),
+        },                  
         {
           path: 'all-lists',
           loadComponent: () =>
