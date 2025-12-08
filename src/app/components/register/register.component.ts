@@ -17,10 +17,7 @@ export class RegisterComponent {
  constructor(private service : AuthServiceService) { }
 
   register() {
-    if (!this.username.trim() || !this.password.trim()) {
-      alert('Por favor, preencha todos os campos.');
-      return;
-    }
+    this.validateData(this.username, this.password);
     this.service.register(this.username, this.password).subscribe({
       next: (response) => {
         alert('Registro bem-sucedido!');
@@ -38,5 +35,12 @@ export class RegisterComponent {
 
   toLogin() {
     window.location.href = '/login'; 
+  }
+
+  validateData(username: string, password: string) {
+    if (!username || !password) {
+      alert('Por favor, preencha todos os campos.');
+      throw new Error('Validation failed: Missing username or password');
+    } 
   }
 }
