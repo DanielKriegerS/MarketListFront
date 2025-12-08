@@ -41,6 +41,28 @@ export class RegisterComponent {
     if (!username || !password) {
       alert('Por favor, preencha todos os campos.');
       throw new Error('Validation failed: Missing username or password');
-    } 
+    }
+
+    this.validatePassword(password);
+    this.validateUsername(username);
+  }
+
+  validatePassword(password: string) {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    if (password.length < minLength || !hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+      alert('Senha fraca. A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.');
+      throw new Error('Validation failed: Weak password');
+    }
+  }
+
+  validateUsername(username: string) {
+    if (username.length < 3) {
+      alert('Nome de usuário inválido. Deve ter mais de 3 caracteres.');
+      throw new Error('Validation failed: Invalid username');
+    }
   }
 }
